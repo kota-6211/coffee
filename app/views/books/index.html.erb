@@ -35,7 +35,9 @@
               </td>
               <td><%= link_to book.title, book_path(id: book.id) %></td>
               <td class="w-25"><%= book.body %></td>
-              <td id="favorite_buttons_<%= @book.id %>"><%= render 'favorites/favorites', book: book %> </td>
+              <td id="favorite_buttons_<%= book.id %>" >
+                <%= render 'favorites/favorites', book: book %>
+              </td>
             </tr>
          <% end %>
        </table>
