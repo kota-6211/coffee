@@ -1,0 +1,45 @@
+<%= flash[:notice] %>
+
+<div class="container">
+  <div class="row" >
+  <%= render 'users/list', user: @user %>
+     <div class="col-md-8 offset-md-1 mt-3" >
+       <h2>Book detail</h2>
+       <table class="table table-hover table-inverse">
+          <thead>
+            <tr>
+              <td>
+                <%= link_to user_path(@book.user_id) do %>
+                  <%= image_tag @book.user.get_profile_image(100,100) %></br><%= @book.user.name %>
+                <% end %>
+              </td>
+              <td><%= link_to @book.title,book_path(id: @book.id)%></td>
+              <td> <%= @book.body %></td>
+              <td id="favorite_buttons">
+                <%= render 'favorites/favorites', book: @book %> 
+              </td>
+              <% if @book.user== current_user %>
+                <td><%= link_to "Edit" , edit_book_path , class: "text-light btn btn-success btn-sm" %></td>
+                <td><%= link_to "Destroy" , book_path(@book), method: :delete ,"data-confirm" =>"are you sure?",class: "delete-button text-light btn btn-danger btn btn-sm"%></td>
+              <% end %>
+              <td>
+                 <p>コメント件数：<%= @book.comments.count %></p>
+              </td>
+            </tr>
+          </thead>
+       </table>
+
+　　<div>
+　　  <div class="comments">
+　　    <%= render "comments/comment" , book: @book %>
+　　  </div>
+        <div>
+          <%= form_with model: [@book,@comment], local: false  do |f| %>
+            <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %></br>
+            <%= f.submit "送信する" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+   </div>
+</div>
